@@ -13,6 +13,7 @@
 		E9234DD31B8F5B54001E3222 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9234DD21B8F5B54001E3222 /* Images.xcassets */; };
 		E9234DD61B8F5B54001E3222 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9234DD41B8F5B54001E3222 /* LaunchScreen.xib */; };
 		E9234DE21B8F5B54001E3222 /* PIctureCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9234DE11B8F5B54001E3222 /* PIctureCheckTests.swift */; };
+		E9234DEC1B8F5B86001E3222 /* CHCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9234DEB1B8F5B86001E3222 /* CHCheck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		E9234DDB1B8F5B54001E3222 /* PIctureCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PIctureCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9234DE01B8F5B54001E3222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9234DE11B8F5B54001E3222 /* PIctureCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIctureCheckTests.swift; sourceTree = "<group>"; };
+		E9234DEB1B8F5B86001E3222 /* CHCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHCheck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				E9234DCB1B8F5B54001E3222 /* AppDelegate.swift */,
 				E9234DCD1B8F5B54001E3222 /* ViewController.swift */,
+				E9234DEB1B8F5B86001E3222 /* CHCheck.swift */,
 				E9234DCF1B8F5B54001E3222 /* Main.storyboard */,
 				E9234DD21B8F5B54001E3222 /* Images.xcassets */,
 				E9234DD41B8F5B54001E3222 /* LaunchScreen.xib */,
@@ -214,6 +217,7 @@
 			files = (
 				E9234DCE1B8F5B54001E3222 /* ViewController.swift in Sources */,
 				E9234DCC1B8F5B54001E3222 /* AppDelegate.swift in Sources */,
+				E9234DEC1B8F5B86001E3222 /* CHCheck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
