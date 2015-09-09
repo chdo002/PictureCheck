@@ -4,25 +4,31 @@ import UIKit
 extension UIImageView {
     
     /**
-    点击查看方法
+    trick tap to check
     */
-
     func check(){
         self.userInteractionEnabled = true
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tap"))
     }
     
     func tap(){
+        // origin picture frame
+        var originSize = self.image!.size
+        let newWidth  = UIScreen.mainScreen().bounds.width
+        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
+        let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
+        // add blackbackground
         var black = UIView(frame: UIScreen.mainScreen().bounds)
             black.backgroundColor = UIColor.blackColor()
             black.alpha = 0
         UIApplication.sharedApplication().keyWindow?.addSubview(black)
-
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             black.alpha = 1
         })
-        var fra = CGRectMake(self.frame.origin.x, self.frame.origin.y , self.frame.size.width, self.frame.size.height)
-        var image = UIImageView(frame: fra)
+        
+        //new image to show
+        var image = UIImageView()
+            image.frame = originFrame
             image.image = self.image
             image.contentMode = UIViewContentMode.ScaleAspectFit
             image.userInteractionEnabled = true
@@ -30,12 +36,14 @@ extension UIImageView {
         black.addSubview(image)
 
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            image.frame = UIScreen.mainScreen().bounds
+            image.frame = CGRectMake(0, (UIScreen.mainScreen().bounds.height / 2 - newHeight / 2 ), newWidth, newHeight)
         })
+
+
         image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "remove:"))
         image.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "pan:"))
         image.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinch:"))
-        
+
     }
     
     func remove(ges:UIGestureRecognizer){
@@ -101,23 +109,30 @@ extension UIImageView {
     }
 
     func pinch(ges : UIPinchGestureRecognizer){
-        
+        //get imageview
         var vie = ges.view
+        // standerd sclae
         var oldFrame = UIApplication.sharedApplication().keyWindow?.frame
+        // origin picture frame
+        var originSize = self.image!.size
+        let newWidth  = UIScreen.mainScreen().bounds.width
+        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
+        let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
+        // largest scale
         var largeFrame = CGRectMake(0 - oldFrame!.size.width, 0 - oldFrame!.size.height, 3 * oldFrame!.size.width, 3 * oldFrame!.size.height)
         if ges.state == UIGestureRecognizerState.Began || ges.state == UIGestureRecognizerState.Changed {
             vie?.transform = CGAffineTransformScale(vie!.transform, ges.scale, ges.scale)
             ges.scale = 1
         }else{
-            if vie!.frame.size.width < oldFrame!.size.width {
+            if vie!.frame.size.width < originFrame.size.width {
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    vie!.frame = oldFrame!
+                    vie!.frame = originFrame
                 })
                 
             }
-            if vie!.frame.size.width > 3 * oldFrame!.size.width {
+            if vie!.frame.size.width > 3 * originFrame.size.width {
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    vie!.frame = largeFrame
+                    vie!.frame.size = largeFrame.size
                 })
                 
             }
