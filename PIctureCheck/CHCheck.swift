@@ -13,12 +13,12 @@ extension UIImageView {
     
     func tap(){
         // origin picture frame
-        var originSize = self.image!.size
+        let originSize = self.image!.size
         let newWidth  = UIScreen.mainScreen().bounds.width
         let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
         let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
         // add blackbackground
-        var black = UIView(frame: UIScreen.mainScreen().bounds)
+        let black = UIView(frame: UIScreen.mainScreen().bounds)
             black.backgroundColor = UIColor.blackColor()
             black.alpha = 0
         UIApplication.sharedApplication().keyWindow?.addSubview(black)
@@ -27,7 +27,7 @@ extension UIImageView {
         })
         
         //new image to show
-        var image = UIImageView()
+        let image = UIImageView()
             image.frame = originFrame
             image.image = self.image
             image.contentMode = UIViewContentMode.ScaleAspectFit
@@ -48,11 +48,11 @@ extension UIImageView {
     
     func remove(ges:UIGestureRecognizer){
         
-        var gesView = ges.view as! UIImageView
+        let gesView = ges.view as! UIImageView
         
-        var superView = gesView.superview
+        let superView = gesView.superview
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            var fra = CGRectMake(self.frame.origin.x, self.frame.origin.y , self.frame.size.width, self.frame.size.height)
+            let fra = CGRectMake(self.frame.origin.x, self.frame.origin.y , self.frame.size.width, self.frame.size.height)
             gesView.frame = fra
         }) { (_) -> Void in
             UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -64,10 +64,10 @@ extension UIImageView {
     }
     
     func pan(ges : UIPanGestureRecognizer){
-        var image     = ges.view as! UIImageView // 被操控对象
-        var blackView = image.superview!          // 背景黑色View
+        let image     = ges.view as! UIImageView // 被操控对象
+        let blackView = image.superview!          // 背景黑色View
         
-        var size = UIScreen.mainScreen().bounds
+        let size = UIScreen.mainScreen().bounds
         
         image.frame.origin.x += ges.translationInView(blackView).x
         image.frame.origin.y += ges.translationInView(blackView).y
@@ -110,16 +110,16 @@ extension UIImageView {
 
     func pinch(ges : UIPinchGestureRecognizer){
         //get imageview
-        var vie = ges.view
+        let vie = ges.view
         // standerd sclae
-        var oldFrame = UIApplication.sharedApplication().keyWindow?.frame
+        let oldFrame = UIApplication.sharedApplication().keyWindow?.frame
         // origin picture frame
-        var originSize = self.image!.size
-        let newWidth  = UIScreen.mainScreen().bounds.width
-        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
+//        let originSize = self.image!.size
+//        let newWidth  = UIScreen.mainScreen().bounds.width
+//        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
         let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
         // largest scale
-        var largeFrame = CGRectMake(0 - oldFrame!.size.width, 0 - oldFrame!.size.height, 3 * oldFrame!.size.width, 3 * oldFrame!.size.height)
+        let largeFrame = CGRectMake(0 - oldFrame!.size.width, 0 - oldFrame!.size.height, 3 * oldFrame!.size.width, 3 * oldFrame!.size.height)
         if ges.state == UIGestureRecognizerState.Began || ges.state == UIGestureRecognizerState.Changed {
             vie?.transform = CGAffineTransformScale(vie!.transform, ges.scale, ges.scale)
             ges.scale = 1

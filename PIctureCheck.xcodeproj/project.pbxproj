@@ -14,6 +14,7 @@
 		E9234DD61B8F5B54001E3222 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9234DD41B8F5B54001E3222 /* LaunchScreen.xib */; };
 		E9234DE21B8F5B54001E3222 /* PIctureCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9234DE11B8F5B54001E3222 /* PIctureCheckTests.swift */; };
 		E9234DEC1B8F5B86001E3222 /* CHCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9234DEB1B8F5B86001E3222 /* CHCheck.swift */; };
+		E936E77F1BABB1AA005AD59F /* PinchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936E77E1BABB1AA005AD59F /* PinchView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		E9234DE01B8F5B54001E3222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9234DE11B8F5B54001E3222 /* PIctureCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIctureCheckTests.swift; sourceTree = "<group>"; };
 		E9234DEB1B8F5B86001E3222 /* CHCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHCheck.swift; sourceTree = "<group>"; };
+		E936E77E1BABB1AA005AD59F /* PinchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				E9234DCB1B8F5B54001E3222 /* AppDelegate.swift */,
 				E9234DCD1B8F5B54001E3222 /* ViewController.swift */,
+				E936E77E1BABB1AA005AD59F /* PinchView.swift */,
 				E9234DEB1B8F5B86001E3222 /* CHCheck.swift */,
 				E9234DCF1B8F5B54001E3222 /* Main.storyboard */,
 				E9234DD21B8F5B54001E3222 /* Images.xcassets */,
@@ -159,7 +162,9 @@
 		E9234DBE1B8F5B54001E3222 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = chdo;
 				TargetAttributes = {
 					E9234DC51B8F5B54001E3222 = {
@@ -218,6 +223,7 @@
 				E9234DCE1B8F5B54001E3222 /* ViewController.swift in Sources */,
 				E9234DCC1B8F5B54001E3222 /* AppDelegate.swift in Sources */,
 				E9234DEC1B8F5B86001E3222 /* CHCheck.swift in Sources */,
+				E936E77F1BABB1AA005AD59F /* PinchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +286,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -346,6 +353,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PIctureCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cd.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -356,6 +364,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PIctureCheck/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cd.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -374,6 +383,7 @@
 				);
 				INFOPLIST_FILE = PIctureCheckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cd.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PIctureCheck.app/PIctureCheck";
 			};
@@ -389,6 +399,7 @@
 				);
 				INFOPLIST_FILE = PIctureCheckTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "cd.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PIctureCheck.app/PIctureCheck";
 			};
@@ -413,6 +424,7 @@
 				E9234DE71B8F5B54001E3222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9234DE81B8F5B54001E3222 /* Build configuration list for PBXNativeTarget "PIctureCheckTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +433,7 @@
 				E9234DEA1B8F5B54001E3222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
