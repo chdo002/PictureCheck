@@ -13,10 +13,8 @@ extension UIImageView {
     
     func tap(){
         // origin picture frame
-        let originSize = self.image!.size
-        let newWidth  = UIScreen.mainScreen().bounds.width
-        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
-        let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
+
+        let originFrame = UIApplication.sharedApplication().keyWindow?.convertRect(frame, fromView: superview)
         // add blackbackground
         let black = UIView(frame: UIScreen.mainScreen().bounds)
             black.backgroundColor = UIColor.blackColor()
@@ -27,44 +25,45 @@ extension UIImageView {
         })
         
         //new image to show
+        let touchB = UIView(frame: UIScreen.mainScreen().bounds)
+            touchB.backgroundColor = UIColor.greenColor()
         let image = UIImageView()
-            image.frame = originFrame
+            image.frame =  originFrame!
             image.image = self.image
             image.contentMode = UIViewContentMode.ScaleAspectFit
-            image.userInteractionEnabled = true
+            touchB.addSubview(image)
         
-        black.addSubview(image)
+        black.addSubview(touchB)
 
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            image.frame = CGRectMake(0, (UIScreen.mainScreen().bounds.height / 2 - newHeight / 2 ), newWidth, newHeight)
+            image.frame = UIScreen.mainScreen().bounds
         })
 
 
-        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "remove:"))
-        image.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "pan:"))
-        image.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinch:"))
+        touchB.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "remove:"))
+        touchB.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "pan:"))
+        touchB.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinch:"))
 
     }
     
     func remove(ges:UIGestureRecognizer){
         
-        let gesView = ges.view as! UIImageView
-        
-        let superView = gesView.superview
+        let imaView = ges.view!.subviews[0]             // NewImage
+        let gesView = ges.view!.superview               // black
+        let originFrame = UIApplication.sharedApplication().keyWindow?.convertRect(frame, fromView: superview)
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            let fra = CGRectMake(self.frame.origin.x, self.frame.origin.y , self.frame.size.width, self.frame.size.height)
-            gesView.frame = fra
+            imaView.frame = originFrame!
         }) { (_) -> Void in
             UIView.animateWithDuration(0.2, animations: { () -> Void in
-                superView!.alpha = 0
+                gesView!.alpha = 0
             }, completion: { (_) -> Void in
-                superView!.removeFromSuperview()
+                gesView!.removeFromSuperview()
             })
         }
     }
     
     func pan(ges : UIPanGestureRecognizer){
-        let image     = ges.view as! UIImageView // 被操控对象
+        let image     = ges.view! // 被操控对象
         let blackView = image.superview!          // 背景黑色View
         
         let size = UIScreen.mainScreen().bounds
@@ -109,33 +108,62 @@ extension UIImageView {
     }
 
     func pinch(ges : UIPinchGestureRecognizer){
-        //get imageview
-        let vie = ges.view
-        // standerd sclae
-        let oldFrame = UIApplication.sharedApplication().keyWindow?.frame
-        // origin picture frame
-//        let originSize = self.image!.size
-//        let newWidth  = UIScreen.mainScreen().bounds.width
-//        let newHeight = (UIScreen.mainScreen().bounds.width / originSize.width) * originSize.height
-        let originFrame = CGRectMake((UIScreen.mainScreen().bounds.width - self.frame.width) / 2, (UIScreen.mainScreen().bounds.height / 2 - self.frame.height / 2 ), self.frame.size.width, self.frame.size.height)
-        // largest scale
-        let largeFrame = CGRectMake(0 - oldFrame!.size.width, 0 - oldFrame!.size.height, 3 * oldFrame!.size.width, 3 * oldFrame!.size.height)
+
+        let vie = ges.view!
+
+        let oldFrame = UIApplication.sharedApplication().keyWindow!.frame
+//        let largeFrame = CGRectMake(0 - oldFrame.size.width, 0 - oldFrame.size.height, 3 * oldFrame.size.width, 3 * oldFrame.size.height)
+//        let newCenter = vie.center
         if ges.state == UIGestureRecognizerState.Began || ges.state == UIGestureRecognizerState.Changed {
-            vie?.transform = CGAffineTransformScale(vie!.transform, ges.scale, ges.scale)
+            vie.transform = CGAffineTransformScale(vie.transform, ges.scale, ges.scale)
             ges.scale = 1
         }else{
-            if vie!.frame.size.width < originFrame.size.width {
+            if vie.frame.size.width < oldFrame.size.width {
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    vie!.frame = originFrame
+                    vie.frame = oldFrame
+                    vie.subviews[0].frame = oldFrame
+                    vie.subviews[0].transform = CGAffineTransformScale(vie.subviews[0].transform, 1, 1)
                 })
-                
             }
-            if vie!.frame.size.width > 3 * originFrame.size.width {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    vie!.frame.size = largeFrame.size
-                })
-                
-            }
+//            else if vie.frame.size.width > 3 * oldFrame.size.width {
+//                UIView.animateWithDuration(0.1, animations: { () -> Void in
+//                    vie.frame = largeFrame
+//                    vie.center = newCenter
+//                })
+//            }else{
+//                let x = vie.frame.origin.x
+//                let y = vie.frame.origin.y
+//                
+//                let xRU = oldFrame.width - (vie.frame.origin.x + vie.frame.width)
+//                let yRU = vie.frame.origin.y
+//                
+//                let xRD = oldFrame.width - (vie.frame.origin.x + vie.frame.width)
+//                let yRD = oldFrame.height - (vie.frame.origin.y + vie.frame.height)
+//                
+//                let xLD = vie.frame.origin.x
+//                let yLD = oldFrame.height - (vie.frame.origin.y + vie.frame.height)
+//                
+//                var oldF = vie.frame
+//
+//                if x > 0 && y > 0 {                 // 右下
+//                    oldF.origin = CGPointMake(0, 0)
+//                }else if xRU > 0 && yRU > 0 {       // 左下
+//                    let newX = oldFrame.width - oldF.width
+//                    oldF.origin = CGPointMake(newX, 0)
+//                }else if xLD > 0 && yLD > 0 {       // 右上
+//                    let newY = oldFrame.height - oldF.height
+//                    oldF.origin = CGPointMake(0, newY)
+//                }else if xRD > 0 && yRD > 0 {       // 左上
+//                    let newX = oldFrame.width - oldF.width
+//                    let newY = oldFrame.height - oldF.height
+//                    oldF.origin = CGPointMake(newX, newY)
+//                }
+//                UIView.animateWithDuration(0.1, animations: { () -> Void in
+//                    vie.frame = oldF
+//                })
+//                
+//            }
         }
+        
     }
 }
