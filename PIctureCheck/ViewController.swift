@@ -15,14 +15,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let ima = UIImageView(image: UIImage(named: "testPic"))
-        ima.contentMode = UIViewContentMode.ScaleAspectFit
-        ima.frame = CGRectMake(50, 50, 350, 350)
+        ima.contentMode = .scaleAspectFit
+        ima.frame = CGRect(x: 50, y: 50, width: 350, height: 350)
         view.addSubview(ima)
         
         ima.check()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
     }

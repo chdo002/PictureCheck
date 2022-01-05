@@ -13,18 +13,21 @@ class PinchView: UIView {
     var isPicnState = false
     var pan: UIPanGestureRecognizer!
     var pinch: UIPinchGestureRecognizer!
-    var showImge: UIImageView!
+    var showImge: UIImageView
     
     init(frame: CGRect,target:AnyObject){
-        super.init(frame: frame)
-        showImge = UIImageView(frame: CGRectMake(0, 0, frame.width, frame.width))
+        
+        showImge = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.width))
         showImge.image = UIImage(named: "testPic")
-        showImge.contentMode = UIViewContentMode.ScaleAspectFill
+        showImge.contentMode = .scaleAspectFill
         showImge.clipsToBounds = true
+        
+        super.init(frame: frame)
+        
         self.addSubview(showImge)
-        pan = UIPanGestureRecognizer(target: self, action: "pan:")
+        pan = UIPanGestureRecognizer(target: self, action: #selector(pan(ges:)))
         self.addGestureRecognizer(pan)
-        pinch = UIPinchGestureRecognizer(target: self, action: "pinch:")
+        pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinch(ges:)))
         self.addGestureRecognizer(pinch)
         self.clipsToBounds = true
     }
@@ -33,40 +36,40 @@ class PinchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func pan(ges: UIPanGestureRecognizer){
+    @objc func pan(ges: UIPanGestureRecognizer){
         if !isPicnState {
-            print(ges.locationInView(self))
+            print(ges.location(in: self))
         }else{
-            showImge.frame.origin.x += ges.translationInView(self).x
-            showImge.frame.origin.y += ges.translationInView(self).y
-            ges.setTranslation(CGPointMake(0, 0), inView: self)
-            backToCenter(ges)
+            showImge.frame.origin.x += ges.translation(in: self).x
+            showImge.frame.origin.y += ges.translation(in: self).y
+            ges.setTranslation(CGPoint(x: 0, y: 0), in: self)
+            backToCenter(ges: ges)
         }
 
     }
     
-    func pinch(ges: UIPinchGestureRecognizer){
+    @objc func pinch(ges: UIPinchGestureRecognizer){
         
         isPicnState = true
         
-        let oldFrame = CGRectMake(0, 0, self.frame.width, self.frame.height)
+        let oldFrame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         
-        let largeFrame = CGRectMake(0 - oldFrame.size.width, 0 - oldFrame.size.height, 3 * oldFrame.size.width, 3 * oldFrame.size.height)
+        let largeFrame = CGRect(x: 0 - oldFrame.size.width, y: 0 - oldFrame.size.height, width: 3 * oldFrame.size.width, height: 3 * oldFrame.size.height)
         let newCenter = showImge.center
-        if ges.state == UIGestureRecognizerState.Began || ges.state == UIGestureRecognizerState.Changed {
+        if ges.state == .began || ges.state == .changed {
             print(ges.scale)
-            showImge.transform = CGAffineTransformScale(showImge.transform, ges.scale, ges.scale)
+            showImge.transform = showImge.transform.scaledBy(x: ges.scale, y: ges.scale)
             ges.scale = 1
 
-        }else{
+        } else {
             if showImge.frame.size.width < self.frame.size.width {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
                     self.showImge.frame = oldFrame
                     self.isPicnState = false
                 })
             }
             if showImge.frame.size.width > 3 * self.frame.size.width {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
                     self.showImge.frame = largeFrame
                     self.showImge.center = newCenter
                 })
@@ -76,41 +79,41 @@ class PinchView: UIView {
     
     func backToCenter(ges: UIGestureRecognizer){
         let image     = showImge // 被操控对象
-        let blackView = image.superview!   // 背景黑色View
+        let blackView = image.superview   // 背景黑色View
         
         let size = self.frame
     
-        if ges.state == UIGestureRecognizerState.Ended { // 手势结束时判断图片是否在view内
+        if ges.state == .ended { // 手势结束时判断图片是否在view内
             
             if image.frame.origin.x <  size.width - image.frame.size.width {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animate(withDuration: 0.3) {
                     image.frame.origin.x = size.width - image.frame.size.width
-                })
+                }
             }
             
             if image.frame.origin.y <  size.width - image.frame.size.height {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animate(withDuration: 0.3) {
                     image.frame.origin.y = size.width - image.frame.size.height
-                })
+                }
             }
             
             
             if image.frame.origin.x > 2 {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animate(withDuration: 0.3) {
                     image.frame.origin.x = 0
-                })
+                }
             }
             
             if image.frame.origin.y > 2 {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                UIView.animate(withDuration: 0.3) {
                     image.frame.origin.y = 0
-                })
+                }
             }
             
             if image.frame.size.width <= size.width {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    image.center = blackView.center
-                })
+                UIView.animate(withDuration: 0.3) {
+                    image.center = blackView!.center
+                }
             }
         }
     }
